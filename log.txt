@@ -1,0 +1,12 @@
+$ git log
+commit 5e8b0d491af8723336d97d915a8ed1f2c664378f (HEAD -> master)
+Author: Egor Kalugin <egor.kalugin29@gmail.com>
+Date:   Mon Feb 15 16:41:06 2021 +0300
+
+    update 1 status.txt
+
+commit f5eeaac5a4daecc89c6820bcc24ab9fee39b9c25
+Author: Egor Kalugin <egor.kalugin29@gmail.com>
+Date:   Mon Feb 15 16:37:12 2021 +0300
+
+    add .gitignore
