@@ -1,0 +1,84 @@
+{
+	"id": "0d040d16-9702-4b98-b0ae-6f22eb44f25d",
+	"name": "genderize",
+	"timestamp": "2021-03-08T19:51:58.426Z",
+	"collection_id": "b7ac7779-1214-4f71-ba23-4ffcc246874a",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 0,
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "0439ac39-583d-40d3-b26a-e12ae2f698fc",
+			"name": "Determine the gender of a name",
+			"url": "https://api.genderize.io/?name=Egor",
+			"time": 503,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				503
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "5160b0be-5cdb-40ce-a220-919ade430e99",
+			"name": "Checking the gender of multiple names in a request",
+			"url": "https://api.genderize.io/?name[]=Egor&name[]=Peter&name[]=Lois",
+			"time": 228,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				228
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "dfecd1f4-91f6-437a-9865-a46a2e388279",
+			"name": "Classifying genders in the scope of a specific country",
+			"url": "https://api.genderize.io/?name=Egor&country_id=BY",
+			"time": 253,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				253
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 984,
+	"collection": {
+		"requests": [
+			{
+				"id": "0439ac39-583d-40d3-b26a-e12ae2f698fc",
+				"method": "GET"
+			},
+			{
+				"id": "5160b0be-5cdb-40ce-a220-919ade430e99",
+				"method": "GET"
+			},
+			{
+				"id": "dfecd1f4-91f6-437a-9865-a46a2e388279",
+				"method": "GET"
+			}
+		]
+	}
+}

@@ -1,0 +1,84 @@
+{
+	"id": "379ea047-5953-435d-8ad5-8f5d3299ecf8",
+	"name": "recipepuppy",
+	"timestamp": "2021-03-08T20:39:37.712Z",
+	"collection_id": "7d33d083-82c3-433f-a17a-f2912fcafaa5",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 0,
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "2ad77927-429c-4921-a458-7f656fa8086b",
+			"name": "by one ingridient",
+			"url": "http://www.recipepuppy.com/api/?i=eggs",
+			"time": 399,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				399
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "4b55f0af-f096-4727-8fd6-2b279c37fba6",
+			"name": "by few ingridients",
+			"url": "http://www.recipepuppy.com/api/?i=eggs,sugar,flour",
+			"time": 248,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				248
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "4573de45-1e95-453a-a126-0d16e0a4ab56",
+			"name": "by few ingridients and search query",
+			"url": "http://www.recipepuppy.com/api/?i=onions,garlic&q=omelet&p=3",
+			"time": 200,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				200
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 847,
+	"collection": {
+		"requests": [
+			{
+				"id": "2ad77927-429c-4921-a458-7f656fa8086b",
+				"method": "GET"
+			},
+			{
+				"id": "4b55f0af-f096-4727-8fd6-2b279c37fba6",
+				"method": "GET"
+			},
+			{
+				"id": "4573de45-1e95-453a-a126-0d16e0a4ab56",
+				"method": "GET"
+			}
+		]
+	}
+}

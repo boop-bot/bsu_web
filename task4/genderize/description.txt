@@ -1,0 +1,7 @@
+A simple API to predict the gender of a person given their name
+
+1)Checking the gender by name.
+
+2)Checking the gender of multiple names in a request
+
+3)Classifying genders in the scope of a specific country

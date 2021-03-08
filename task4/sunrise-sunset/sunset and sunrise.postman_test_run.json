@@ -1,0 +1,84 @@
+{
+	"id": "463e159f-3968-47ff-bb42-cc65666bebe5",
+	"name": "sunset and sunrise",
+	"timestamp": "2021-03-08T21:38:08.763Z",
+	"collection_id": "471effd2-b2ee-4a24-9e33-ff0fe0909301",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 0,
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "3e028d40-2073-48f4-b125-bc30921344c3",
+			"name": "by latitude and longitude",
+			"url": "https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400",
+			"time": 588,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				588
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "939295b9-0a6e-436a-a3f6-b3cb21953855",
+			"name": "by latitude and longitude and date",
+			"url": "https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400&date=today",
+			"time": 204,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				204
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "1cdca711-f248-4326-a506-60bbdb3de398",
+			"name": "by latitude and longitude and specific date",
+			"url": "https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400&date=2051-03-08",
+			"time": 229,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				229
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 1021,
+	"collection": {
+		"requests": [
+			{
+				"id": "3e028d40-2073-48f4-b125-bc30921344c3",
+				"method": "GET"
+			},
+			{
+				"id": "939295b9-0a6e-436a-a3f6-b3cb21953855",
+				"method": "GET"
+			},
+			{
+				"id": "1cdca711-f248-4326-a506-60bbdb3de398",
+				"method": "GET"
+			}
+		]
+	}
+}
