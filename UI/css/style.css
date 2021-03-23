@@ -101,6 +101,7 @@ body {
 }
 
 .filter__element {
+  font-size: 20px;
   margin: 0 30px;
   border: 2px solid #C0C0C0;
   padding: 5px 15px;
@@ -127,8 +128,11 @@ body {
   .filter {
     font-size: 2.5vw;
   }
+  .filter__element {
+    font-size: 2.5vw;
+  }
 }
-@media (max-width: 700px) {
+@media (max-width: 760px) {
   .filter {
     width: 20%;
     flex-direction: column;
@@ -144,6 +148,7 @@ body {
   }
   .filter__element {
     margin-bottom: 20px;
+    font-size: 20px;
   }
 
 }
