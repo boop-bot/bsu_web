@@ -1,4 +1,12 @@
-*.iml
-.DS_Store/
-.idea/
+target/
 out/
+.history
+.cache
+*.DS_Store
+.idea/
+.idea_modules/
+.keys/
+.logs/
+*.iml
+*.ipr
+*.iws
