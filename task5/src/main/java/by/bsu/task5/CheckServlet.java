@@ -10,12 +10,9 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "checkServlet", value = "/check")
 public class CheckServlet extends HttpServlet {
-    private String message;
+    private static final String message = "{\"success\" : true}";
 
-    public void init() {
-        message = "{\"success\" : true}";
-    }
-
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
         response.setContentType("application/json");
@@ -31,8 +28,5 @@ public class CheckServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         out.print(message);
         out.flush();
-    }
-
-    public void destroy() {
     }
 }

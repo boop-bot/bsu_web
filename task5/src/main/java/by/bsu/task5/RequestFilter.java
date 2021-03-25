@@ -21,6 +21,4 @@ public class RequestFilter implements Filter {
         String result = httpMethod + " - " + url + " - " + time;
         System.out.println(result);
     }
-    public void destroy() {}
-    public void init(FilterConfig arg0) throws ServletException {}
 }

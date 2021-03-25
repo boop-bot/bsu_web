@@ -6,12 +6,9 @@ import javax.servlet.annotation.*;
 
 @WebServlet(name = "statusServlet", value = "/status")
 public class StatusServlet extends HttpServlet {
-    private String message;
+    private static final String message = "Application Is Running";
 
-    public void init() {
-        message = "Application Is Running";
-    }
-
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
 
@@ -19,8 +16,5 @@ public class StatusServlet extends HttpServlet {
         out.println("<html><body>");
         out.println("<h1>" + message + "</h1>");
         out.println("</body></html>");
-    }
-
-    public void destroy() {
     }
 }

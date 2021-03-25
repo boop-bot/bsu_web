@@ -12,14 +12,9 @@ import java.io.IOException;
 public class FirstTestServlet extends HttpServlet {
     private static final String SERVLET = "/status";
 
-    public void init() {
-    }
-
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         RequestDispatcher dispatcher =  request.getRequestDispatcher(SERVLET);
         dispatcher.forward(request, response);
-    }
-
-    public void destroy() {
     }
 }
