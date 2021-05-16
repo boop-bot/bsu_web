@@ -12,7 +12,7 @@ public class AdCollectionTest {
     private Advertisement advertisement;
     AdCollection adCollection;
 
-    @BeforeTest
+    @BeforeMethod
     public void setUp() {
         adCollection = new AdCollection();
         advertisement = new Advertisement();
@@ -35,17 +35,17 @@ public class AdCollectionTest {
 
     @Test
     public void validateTestOk() {
-        assertTrue(adCollection.validate(advertisement));
+        assertTrue(Advertisement.validate(advertisement));
     }
 
     @Test
     public void validateTestFalse() {
         LocalDate date = LocalDate.of(2030, 10, 10);
         advertisement.setCreationDate(date);
-        assertFalse(adCollection.validate(advertisement));
+        assertFalse(Advertisement.validate(advertisement));
     }
 
-    @AfterTest
+    @AfterClass
     public void tearDown() {
         advertisement = null;
         adCollection = null;

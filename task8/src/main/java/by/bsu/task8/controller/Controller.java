@@ -15,13 +15,13 @@ import com.google.gson.Gson;
 
 @WebServlet("/ads/*")
 public class Controller extends HttpServlet {
-    private static final AdCollection adCollection = new AdCollection();
+    private static final AdCollection AD_COLLECTION = new AdCollection();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
         resp.setContentType("application/json");
-        resp.getWriter().print((new Gson()).toJson(adCollection.get(id)));
+        resp.getWriter().print((new Gson()).toJson(AD_COLLECTION.get(id)));
     }
 
     @Override
@@ -30,7 +30,7 @@ public class Controller extends HttpServlet {
         String[] url = req.getRequestURI().split("/");
         if (url.length == 3 && url[2].equals("search")) {
             Gson gson = new Gson();
-            resp.getWriter().print(adCollection.getAll().stream().map(gson::toJson).collect(Collectors.joining("\n")));
+            resp.getWriter().print(AD_COLLECTION.getAll().stream().map(gson::toJson).collect(Collectors.joining("\n")));
         }
     }
 
@@ -39,10 +39,10 @@ public class Controller extends HttpServlet {
         resp.setContentType("application/json");
         String[] url = req.getRequestURI().split("/");
         if(url[2].equals("add")){
-            resp.getWriter().print((new Gson()).toJson(adCollection.add((new Gson()).fromJson(req.getReader().readLine(), Advertisement.class))));
+            resp.getWriter().print((new Gson()).toJson(AD_COLLECTION.add((new Gson()).fromJson(req.getReader().readLine(), Advertisement.class))));
         }
         if (url[2].equals("edit")){
-            resp.getWriter().print((new Gson()).toJson(adCollection.edit(req.getParameter("id"), (new Gson()).fromJson(req.getReader().readLine(), Advertisement.class))));
+            resp.getWriter().print((new Gson()).toJson(AD_COLLECTION.edit(req.getParameter("id"), (new Gson()).fromJson(req.getReader().readLine(), Advertisement.class))));
         }
     }
 
@@ -50,6 +50,6 @@ public class Controller extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
         resp.setContentType("application/json");
-        resp.getWriter().print((new Gson()).toJson(adCollection.remove(id)));
+        resp.getWriter().print((new Gson()).toJson(AD_COLLECTION.remove(id)));
     }
 }

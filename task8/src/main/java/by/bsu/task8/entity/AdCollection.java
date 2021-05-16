@@ -1,11 +1,9 @@
 package by.bsu.task8.entity;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class AdCollection {
     private List<Advertisement> advertisements;
@@ -16,11 +14,22 @@ public class AdCollection {
 
     public Advertisement get(String id) {
         try {
-            Advertisement advertisement = advertisements.stream().filter(a->a.getId().equals(id)).findAny().get();
-            return advertisement;
+            return advertisements.stream().filter(a->a.getId().equals(id)).findAny().get();
         } catch (NoSuchElementException e) {
             return null;
         }
+    }
+
+    public List<Advertisement> getAds(int skip, int top, AdFilter filter) {
+        if (filter.getHashTags().size() == 0 && filter.getVendors().size() == 0) {
+            return advertisements.stream().skip(skip).limit(top).collect(Collectors.toCollection(ArrayList::new));
+        } else if (filter.getHashTags().size() == 0) {
+            return filterByVendors(this.advertisements, filter.getVendors(), skip, top);
+        } else if (filter.getVendors().size() == 0) {
+            return filterByTags(this.advertisements, filter.getHashTags(), skip, top);
+        }
+        return filterByTags(filterByVendors(this.advertisements, filter.getVendors(), skip, top),
+                filter.getHashTags(), 0, top);
     }
 
     public List<Advertisement> getAll() {
@@ -40,14 +49,22 @@ public class AdCollection {
             return false;
         }
 
-        int index;
-        try {
-            index = IntStream.range(0, advertisements.size()).filter(i -> advertisements.get(i).getId().equals(id)).findFirst().getAsInt();
-        } catch (NoSuchElementException e) {
+        Advertisement currentAd = advertisements.stream().filter(ad -> ad.getId().equals(id)).findFirst().orElse(null);
+        if (currentAd == null) {
             return false;
         }
 
-        Advertisement adToEdit = (Advertisement) advertisements.get(index).clone();
+        Advertisement adToEdit = new Advertisement();
+        adToEdit.setId(currentAd.getId());
+        adToEdit.setDescription(currentAd.getDescription());
+        adToEdit.setCreationDate(currentAd.getCreationDate());
+        adToEdit.setWebLink(currentAd.getWebLink());
+        adToEdit.setVendor(currentAd.getVendor());
+        adToEdit.setPhotoLink(currentAd.getPhotoLink());
+        adToEdit.setDeadlineDate(currentAd.getDeadlineDate());
+        adToEdit.setDiscount(currentAd.getDiscount());
+        adToEdit.setRating(currentAd.getRating());
+        adToEdit.setHashTags(new ArrayList<>(currentAd.getHashTags()));
         if (advertisement.getDescription() != null) {
             adToEdit.setDescription(advertisement.getDescription());
         }
@@ -70,8 +87,17 @@ public class AdCollection {
             adToEdit.setHashTags(advertisement.getHashTags());
         }
 
-        if (validate(adToEdit)) {
-            advertisements.set(index, adToEdit);
+        if (Advertisement.validate(adToEdit)) {
+            currentAd.setId(adToEdit.getId());
+            currentAd.setDescription(adToEdit.getDescription());
+            currentAd.setCreationDate(adToEdit.getCreationDate());
+            currentAd.setWebLink(adToEdit.getWebLink());
+            currentAd.setVendor(adToEdit.getVendor());
+            currentAd.setPhotoLink(adToEdit.getPhotoLink());
+            currentAd.setDeadlineDate(adToEdit.getDeadlineDate());
+            currentAd.setDiscount(adToEdit.getDiscount());
+            currentAd.setRating(adToEdit.getRating());
+            currentAd.setHashTags(adToEdit.getHashTags());
             return true;
         } else {
             return false;
@@ -79,49 +105,32 @@ public class AdCollection {
     }
 
     public boolean remove(String id) {
-        int index;
-        try {
-            index = IntStream.range(0, advertisements.size()).filter(i -> advertisements.get(i).getId().equals(id)).findFirst().getAsInt();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-        advertisements.remove(index);
-        return true;
-    }
-
-    public boolean validate(Advertisement advertisement) {
-        LocalDate currentDate = LocalDate.now();
-        final String REGEX_ID = "\\d+";
-        final String REGEX_DESCRIPTION = ".{1,300}";
-        final String REGEX_WEBLINK = "[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)";
-
-        if (advertisement.getId().compareTo("0") > 0  && advertisement.getId().compareTo("100") < 0 &&
-                advertisement.getDescription().matches(REGEX_DESCRIPTION) &&
-                advertisement.getCreationDate().isBefore(currentDate) &&
-                advertisement.getWebLink().matches(REGEX_WEBLINK) &&
-                !advertisement.getVendor().isEmpty() &&
-                !advertisement.getPhotoLink().isEmpty() &&
-                advertisement.getDeadlineDate().isAfter(currentDate) &&
-                advertisement.getDiscount() > 0 && advertisement.getDiscount() <= 100 &&
-                advertisement.getRating() > 0 && advertisement.getRating() <= 10 &&
-                !advertisement.getHashTags().isEmpty()) {
+        Optional<Advertisement> ad = advertisements.stream().filter(e -> e.getId().equals(id)).findFirst();
+        if(ad.isPresent()){
+            advertisements.remove(ad.get());
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
-    public List<Advertisement> addAll(List<Advertisement> advertisementList) {
-        List<Advertisement> notValidatedAds = new ArrayList<>();
-        advertisements.forEach(a-> {
-            if (!add(a)) {
-                notValidatedAds.add(a);
-            }
-        });
-        return notValidatedAds;
+    public void addAll(List<Advertisement> advertisementList) {
+        advertisements.forEach(a-> {add(a);});
     }
 
     public void clear() {
         advertisements.clear();
+    }
+
+    private List<Advertisement> filterByVendors(List<Advertisement> ads, List<String> vendors,
+                                     int skip, int top) {
+        return ads.stream().filter(element -> vendors.contains(element.getVendor()))
+                .skip(skip).limit(top).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    private List<Advertisement> filterByTags(List<Advertisement> ads, List<String> hashTags, int skip,
+                                  int top) {
+        return ads.stream().filter(element -> element.getHashTags().stream().anyMatch(hashTag -> hashTags.contains(hashTag)))
+                .skip(skip).limit(top).collect(Collectors.toCollection(ArrayList::new));
+
     }
 }

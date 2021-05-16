@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Advertisement implements Cloneable {
+public class Advertisement {
     private String id;
     private String description;
     private LocalDate creationDate;
@@ -112,6 +112,28 @@ public class Advertisement implements Cloneable {
         this.hashTags = hashTags;
     }
 
+    public static boolean validate(Advertisement advertisement) {
+        LocalDate currentDate = LocalDate.now();
+        final String REGEX_ID = "\\d+";
+        final String REGEX_DESCRIPTION = ".{1,300}";
+        final String REGEX_WEBLINK = "[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)";
+
+        if (advertisement.getId() != null && advertisement.getId().compareTo("0") > 0  && advertisement.getId().compareTo("100") < 0 &&
+                advertisement.getDescription() != null && advertisement.getDescription().matches(REGEX_DESCRIPTION) &&
+                advertisement.getCreationDate() != null && advertisement.getCreationDate().isBefore(currentDate) &&
+                advertisement.getWebLink() != null && advertisement.getWebLink().matches(REGEX_WEBLINK) &&
+                advertisement.getVendor()!= null && !advertisement.getVendor().isEmpty() &&
+                advertisement.getPhotoLink() != null && !advertisement.getPhotoLink().isEmpty() &&
+                advertisement.getDeadlineDate() != null && advertisement.getDeadlineDate().isAfter(currentDate) &&
+                advertisement.getDiscount() > 0 && advertisement.getDiscount() <= 100 &&
+                advertisement.getRating() > 0 && advertisement.getRating() <= 10 &&
+                advertisement.getHashTags() != null && !advertisement.getHashTags().isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -121,43 +143,27 @@ public class Advertisement implements Cloneable {
 
         if (discount != that.discount) return false;
         if (Float.compare(that.rating, rating) != 0) return false;
-        if (!description.equals(that.description)) return false;
-        if (!creationDate.equals(that.creationDate)) return false;
-        if (!webLink.equals(that.webLink)) return false;
-        if (!vendor.equals(that.vendor)) return false;
-        if (!photoLink.equals(that.photoLink)) return false;
-        if (!deadlineDate.equals(that.deadlineDate)) return false;
-        return hashTags.equals(that.hashTags);
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (creationDate != null ? !creationDate.equals(that.creationDate) : that.creationDate != null) return false;
+        if (webLink != null ? !webLink.equals(that.webLink) : that.webLink != null) return false;
+        if (vendor != null ? !vendor.equals(that.vendor) : that.vendor != null) return false;
+        if (photoLink != null ? !photoLink.equals(that.photoLink) : that.photoLink != null) return false;
+        if (deadlineDate != null ? !deadlineDate.equals(that.deadlineDate) : that.deadlineDate != null) return false;
+        return hashTags != null ? hashTags.equals(that.hashTags) : that.hashTags == null;
     }
 
     @Override
     public int hashCode() {
-        int result = description.hashCode();
-        result = 31 * result + creationDate.hashCode();
-        result = 31 * result + webLink.hashCode();
-        result = 31 * result + vendor.hashCode();
-        result = 31 * result + photoLink.hashCode();
-        result = 31 * result + deadlineDate.hashCode();
+        int result = description != null ? description.hashCode() : 0;
+        result = 31 * result + (creationDate != null ? creationDate.hashCode() : 0);
+        result = 31 * result + (webLink != null ? webLink.hashCode() : 0);
+        result = 31 * result + (vendor != null ? vendor.hashCode() : 0);
+        result = 31 * result + (photoLink != null ? photoLink.hashCode() : 0);
+        result = 31 * result + (deadlineDate != null ? deadlineDate.hashCode() : 0);
         result = 31 * result + discount;
         result = 31 * result + (rating != +0.0f ? Float.floatToIntBits(rating) : 0);
-        result = 31 * result + hashTags.hashCode();
+        result = 31 * result + (hashTags != null ? hashTags.hashCode() : 0);
         return result;
-    }
-
-    public Object clone()
-    {
-        Advertisement advertisement = new Advertisement();
-        advertisement.setId(String.copyValueOf(this.id.toCharArray()));
-        advertisement.setDescription(String.copyValueOf(this.description.toCharArray()));
-        advertisement.setCreationDate(this.creationDate);
-        advertisement.setWebLink(String.copyValueOf(this.webLink.toCharArray()));
-        advertisement.setVendor(String.copyValueOf(this.vendor.toCharArray()));
-        advertisement.setPhotoLink(String.copyValueOf(this.photoLink.toCharArray()));
-        advertisement.setDeadlineDate(this.deadlineDate);
-        advertisement.setDiscount(this.discount);
-        advertisement.setRating(this.rating);
-        advertisement.setHashTags(new ArrayList<>(this.hashTags));
-        return advertisement;
     }
 
     @Override
