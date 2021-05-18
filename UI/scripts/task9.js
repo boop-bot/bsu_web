@@ -116,8 +116,8 @@ class AdCollection {
 //USER
 class User{
     constructor(name, isLoggedIn){
-        this._name = name;
-        this._isLoggedIn = isLoggedIn;
+        this.name = name;
+        this.isLoggedIn = isLoggedIn;
     }
 }
 
@@ -154,7 +154,7 @@ class View{
 
     showAds(skip = 0, top = 10, filter = {}){
         let buttons = '';
-        if(this.#user._isLoggedIn){
+        if(this.#user.isLoggedIn){
             buttons = '<i class="far fa-file-alt fa-3x"></i>'
         }
         const products = document.getElementsByClassName("product")[0];
@@ -162,17 +162,13 @@ class View{
 
         let itemCollection = [];
 
-        this.#adCollection.getPage(skip,top,filter).forEach(
+        this.#adCollection.getPage(skip,top,filter)[0].forEach(
             elem =>{
                 const adItem = document.createElement('div');
                 adItem.classList.add('product__item');
 
                 let reviewsText = "";
-                elem.reviews.slice(2).forEach(
-                    review => {
-                        reviewsText += `<li>${review}</li>`;
-                    }
-                )
+
 
                 let hashTagsText = "";
                 elem.hashTags.forEach(
@@ -188,49 +184,38 @@ class View{
                 <img class="product__icon" src=${elem.photoLink} alt="Product">
                 <div class="product__name"></div>
                 <div class="product__vendor">${elem.vendor}</div>
-                <div class="product__profit">
-                  <p>${elem.discount}</p>
-                  <div class="product__date">
-                    <span class="text">Expires on:</span>
-                    <time>${this.formatDate(elem.validUntil)}</time>
-                  </div>
+                <div class="product__profit">${elem.discount}</div>
+                <div class="product__rate">${elem.rating}</div>
+                <div class="product__date">
+                  <span class="text">Expires on:</span>
+                  <time>${this.formatDate(elem.validUntil)}</time>
                 </div>
               </div>
               <div class="product__desc">
                 <div class="product__desc-text">
                   <p>${elem.description}</p>
-                  <a class="product__desc-link" href = ${elem.link} target = "_blank">learn more</a>
+                  <a class="product__desc-text" href = ${elem.link}>learn more</a>
                 </div>
-                <ul class="product__comments">
-                  ${reviewsText}
-                </ul>
+                <ul class="product__reviews">
+                    <li>Review 1</li>
+                    <li>Review 2</li>
+                    <li>Review 3</li>
+                    <li>Review 4</li>
+              </ul>
               </div>
             </div>
             <div class="product__item-bottom">
-              <div class="product__meta">
-                ${hashTagsText}
-              </div>
-              <div class="product__control">
-                ${buttons}
-              </div>
-              <div class="product__date-rate">
-                <div class="product__rate">
-                  <img id="star" src="images/product/star.png" alt="Rate Star">
-                  <img id="star" src="images/product/star.png" alt="Rate Star">
-                  <img id="star" src="images/product/star.png" alt="Rate Star">
-                  <img id="star" src="images/product/star.png" alt="Rate Star">
-                  <img id="star" src="images/product/star.png" alt="Rate Star">
-                </div> 
-                <div class="product__date">
-                  <span class="text">Published on:</span> 
-                  <time>${this.formatDate(elem.createdAt)}</time>
-                </div>
-              </div>
+                  <a class="add__review">
+                        write review
+                  </a>
+                  <div class="product__meta">
+                    ${hashTagsText}
+                  </div>
             </div>
             `;
                 itemCollection.push(adItem);
             }
-        )
+        );
 
         itemCollection.sort((a,b) => {return b.createdAt - a.createdAt});
 
@@ -260,9 +245,9 @@ class View{
     }
 
     createHeader(){
-        if(this.#user._isLoggedIn){
+        if(this.#user.isLoggedIn){
             const headerUserName = document.getElementsByClassName("nav__username")[0];
-            headerUserName.innerHTML = this.#user._name;
+            headerUserName.innerHTML = this.#user.name;
         }else{
             const headerUserName = document.getElementsByClassName("nav__username")[0];
             headerUserName.innerHTML = " ";
@@ -518,7 +503,7 @@ let adList = [
 
 let adCollection = new AdCollection(adList);
 
-const user = new User("test_user", true);
+const user = new User("test_user", false);
 
 const viewer = new View(user, adCollection);
 
