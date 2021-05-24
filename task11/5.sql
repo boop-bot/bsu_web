@@ -1,0 +1,1 @@
+SELECT U.user_login, UR.user_role_name FROM profit.users U INNER JOIN profit.user_roles UR ON U.user_role_id = UR.user_role_id;
