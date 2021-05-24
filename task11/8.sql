@@ -1,0 +1,1 @@
+SELECT P.product_id, P.product_desciption, P.product_creation_date, P.product_link, P.product_vendor, P.product_photo_link, P.product_valid_until, P.product_discount, P.product_rating  FROM profit.products P ORDER BY P.product_creation_date DESC LIMIT 5;
